@@ -27,6 +27,38 @@ export default class ProductDetails {
             this.productOptionsChanged(event);
             this.setProductVariant();
         });
+
+        const fabricTypes = ["Sunbrella", "Sun-DURA", "Poly-Guard", "Double Duck", "Boat Duck", "Camouflage"];
+
+        $('#fabric-type select').on('change', function (e) {
+            const value = e.target.value;
+            let selectedFabricType = null;
+            
+            if (value) {
+                $('#fabric-color').removeClass('hidden');
+                const fabricType = $('option:selected', this).attr('data-product-attribute-label');
+
+                fabricTypes.forEach((type) => {
+                    if (fabricType.includes(type)) {
+                        selectedFabricType = type;
+                    }
+                });
+
+                $.each($('#fabric-color').find('.form-radio'), (id, value) => {
+                    if ($(value).attr('data-product-attribute-label').includes(selectedFabricType)) {
+                        $(value).removeClass('hidden');
+                        $(`[data-product-attribute-value="${$(value).val()}"]`).removeClass('hidden');
+                        $(`[data-product-attribute-value="${$(value).val()}"]`).addClass('show');
+                    } else {
+                        $(value).addClass('hidden');
+                        $(`[data-product-attribute-value="${$(value).val()}"]`).removeClass('show');
+                        $(`[data-product-attribute-value="${$(value).val()}"]`).addClass('hidden');
+                    }
+                });
+            } else {
+                $('#fabric-color').addClass('hidden');
+            }
+        });
  
         /* hidden so that UpsellClass.js can do its magic
         $form.on('submit', event => {
