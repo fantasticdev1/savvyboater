@@ -420,3 +420,12 @@
 .show {
     display: inline-block !important;
 }
+
+#fabric-type {
+    padding-left: 120px;
+    & > label {
+        width: 120px;
+        float: left;
+        margin: 0 0 8px -120px !important;
+    }
+}
